@@ -190,9 +190,9 @@ resource "aws_db_instance" "default" {
   vpc_security_group_ids = [aws_security_group.public_instance_sg.id]
 
   depends_on = [ aws_db_subnet_group.subnet_group-db ]
-  # lifecycle {
-  #    prevent_destroy = true # Prevent accidental deletion
-  # }
+   lifecycle{
+    prevent_destroy=true
+  }
 }
 
 # Common dependencies layer
@@ -317,6 +317,9 @@ resource "aws_ecr_repository" "app_repo" {
 
   image_scanning_configuration {
     scan_on_push = true
+  }
+  lifecycle{
+    prevent_destroy=true
   }
 }
 # 2. ECS Task Definition

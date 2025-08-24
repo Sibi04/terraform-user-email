@@ -191,7 +191,7 @@ resource "aws_db_instance" "default" {
 
   depends_on = [ aws_db_subnet_group.subnet_group-db ]
    lifecycle{
-    prevent_destroy=true
+    prevent_destroy=false
   }
 }
 
@@ -319,7 +319,7 @@ resource "aws_ecr_repository" "app_repo" {
     scan_on_push = true
   }
   lifecycle{
-    prevent_destroy=true
+    prevent_destroy=false
   }
 }
 # 2. ECS Task Definition

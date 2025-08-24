@@ -443,8 +443,12 @@ resource "aws_lb" "app_alb" {
 # 3. ALB Target Group
 resource "aws_lb_target_group" "app_tg" {
   name        = "${var.project_name}-tg"
-  port        = var.container_port
-  protocol    = "HTTP"
+  #port        = var.container_port
+  #protocol    = "HTTP"
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = aws_acm_certificate.example.arn
   vpc_id      = aws_vpc.main_vpc.id # Reference existing VPC
   target_type = "ip" # For Fargate
 

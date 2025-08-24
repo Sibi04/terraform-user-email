@@ -448,7 +448,7 @@ resource "aws_lb_target_group" "app_tg" {
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.example.arn
+  certificate_arn   = "arn:aws:acm:us-east-1:227224898353:certificate/aa35a7af-5aaf-4121-80fe-a04df65c3491"
   vpc_id      = aws_vpc.main_vpc.id # Reference existing VPC
   target_type = "ip" # For Fargate
 

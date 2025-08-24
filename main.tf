@@ -486,10 +486,10 @@ resource "aws_s3_bucket" "website-index-808581944931" {
 resource "aws_s3_bucket_public_access_block" "example" {
   bucket = aws_s3_bucket.website-index-808581944931.id
 
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
   depends_on = [ aws_s3_bucket_object.example , aws_s3_bucket_object.add_user_web  ]
   
 }
@@ -536,13 +536,13 @@ resource "aws_s3_bucket_policy" "allow_access_from_account" {
   #, aws_cloudfront_distribution.s3_distribution]
 }
 
-resource "aws_s3_bucket_website_configuration" "website_config" {
-  bucket = aws_s3_bucket.website-index-808581944931.id
+#resource "aws_s3_bucket_website_configuration" "website_config" {
+#  bucket = aws_s3_bucket.website-index-808581944931.id
 
-  index_document {
-    suffix = "index.html"
-  }
-}
+ # index_document {
+#    suffix = "index.html"
+ # }
+#}
 
 locals {
    s3_origin_id = "s3Origin" 
@@ -580,11 +580,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   domain_name              = aws_s3_bucket.website-index-808581944931.bucket_regional_domain_name 
   origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
   origin_id                = local.s3_origin_id
-
+}
   # s3_origin_config {
   #   origin_access_identity = aws_cloudfront_origin_access_control.oac.id
   # }
-}
+
 #  origin {
 #   domain_name = aws_s3_bucket.website-index-808581944931.website_endpoint
 #   origin_id   = local.s3_origin_id
@@ -647,7 +647,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   restrictions {
     geo_restriction {
       restriction_type = "whitelist"
-      locations        = ["US", "CA", "GB", "DE" ,"IN"]
+      locations        = "none"
     }
   }
 

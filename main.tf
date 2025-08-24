@@ -443,12 +443,8 @@ resource "aws_lb" "app_alb" {
 # 3. ALB Target Group
 resource "aws_lb_target_group" "app_tg" {
   name        = "${var.project_name}-tg"
-  #port        = var.container_port
-  #protocol    = "HTTP"
-  port              = 443
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = "arn:aws:acm:us-east-1:227224898353:certificate/aa35a7af-5aaf-4121-80fe-a04df65c3491"
+  port        = var.container_port
+  protocol    = "HTTP"
   vpc_id      = aws_vpc.main_vpc.id # Reference existing VPC
   target_type = "ip" # For Fargate
 
@@ -470,9 +466,10 @@ resource "aws_lb_target_group" "app_tg" {
 # 4. ALB Listener
 resource "aws_lb_listener" "http_listener" {
   load_balancer_arn = aws_lb.app_alb.arn
-  port              = 80
-  protocol          = "HTTP"
-
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = "arn:aws:acm:us-east-1:227224898353:certificate/aa35a7af-5aaf-4121-80fe-a04df65c3491"
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.app_tg.arn

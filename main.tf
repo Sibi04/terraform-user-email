@@ -564,6 +564,7 @@ resource "aws_cloudfront_origin_access_control" "oac" {
 
 resource "aws_s3_bucket" "cf_logs" {
   bucket = "cf-logs-user-mail-1"
+  object_lock_enabled = false
 }
 
 resource "aws_s3_bucket_public_access_block" "example1" {
@@ -575,7 +576,10 @@ resource "aws_s3_bucket_public_access_block" "example1" {
   restrict_public_buckets = true
   
 }
-
+resource "aws_s3_bucket_acl" "cf_logs" {
+  bucket = aws_s3_bucket.cf_logs.id
+  acl    = "log-delivery-write"   # grants CloudFront the needed permissions
+}
 # CloudFront Distribution
 
 resource "aws_cloudfront_distribution" "s3_distribution" {

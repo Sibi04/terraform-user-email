@@ -639,7 +639,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   #       forward = "none"
   #     }
   #   }
-
+  #  cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+  #  origin_request_policy_id = "b689b0a8-53d0-40ab-baf2-68738e2966ac"
   #   min_ttl     = 0
   #   default_ttl = 86400    # 1 day
   #   max_ttl     = 31536000 # 1 year

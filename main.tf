@@ -789,8 +789,8 @@ resource "aws_route53_record" "cf_alias" {
   type    = "A"
 
   alias {
-    name                   = aws_cloudfront_distribution.s3_distribution.dns_name   # CF DNS name
-    zone_id                = aws_cloudfront_distribution.s3_distribution.zone_id    # CF's zone ID (provided by AWS)
+    name                   = aws_cloudfront_distribution.s3_distribution.domain_name   # CF DNS name
+    zone_id                = aws_cloudfront_distribution.s3_distribution.hosted_zone_id    # CF's zone ID (provided by AWS)
     evaluate_target_health = true
   }
 }

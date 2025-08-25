@@ -757,3 +757,16 @@ resource "aws_lambda_function" "sns-lambda" {
   }
   depends_on = [ aws_db_instance.default ]
 }
+
+resource "aws_cloudtrail" "main" {
+  name                          = "ct-tf-1"
+  s3_bucket_name                = aws_s3_bucket.trail_logs.bucket
+  include_global_service_events = true
+  is_multi_region_trail         = true
+  enable_logging                = true
+}
+
+resource "aws_s3_bucket" "trail_logs" {
+  bucket = "tf-cloud-jen-trail"
+  force_destroy = true
+}

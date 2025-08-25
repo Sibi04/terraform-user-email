@@ -569,7 +569,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   enabled         = true
   is_ipv6_enabled = false
   comment         = "CloudFront for S3 Website"
-
+  
   # origin {
   #   domain_name              = aws_s3_bucket.website-index-808581944931.bucket_regional_domain_name 
   #   #aws_s3_bucket.website-index-808581944931.website_endpoint
@@ -645,7 +645,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   #   max_ttl     = 31536000 # 1 year
   #   compress    = true
   # }
-
+  aliases = ["user-mail.ai.trimblecloud.com"]
   restrictions {
     geo_restriction {
       restriction_type = "whitelist"
@@ -654,7 +654,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn      = "arn:aws:acm:us-east-1:227224898353:certificate/aa35a7af-5aaf-4121-80fe-a04df65c3491"
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 
   default_root_object = "index.html"

@@ -488,10 +488,10 @@ resource "aws_s3_bucket" "website-index-808581944931" {
 resource "aws_s3_bucket_public_access_block" "example" {
   bucket = aws_s3_bucket.website-index-808581944931.id
 
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
   depends_on = [ aws_s3_bucket_object.example , aws_s3_bucket_object.add_user_web  ]
   
 }

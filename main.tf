@@ -770,3 +770,28 @@ resource "aws_s3_bucket" "trail_logs" {
   bucket = "tf-cloud-jen-trail"
   force_destroy = true
 }
+
+resource "aws_route53_record" "load_alias" {
+  zone_id = "Z09224103SUEEWP2ZQLSY"   # this is YOUR domain's hosted zone ID
+  name    =  "load.ai.trimblecloud.com"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.app_alb.dns_name   # ALB DNS name
+    zone_id                = aws_lb.app_alb.zone_id    # ALB's zone ID (provided by AWS)
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "cf_alias" {
+  zone_id = "Z09224103SUEEWP2ZQLSY"   # this is YOUR domain's hosted zone ID
+  name    =  "user-mail.ai.trimblecloud.com"
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.s3_distribution.dns_name   # CF DNS name
+    zone_id                = aws_cloudfront_distribution.s3_distribution.zone_id    # CF's zone ID (provided by AWS)
+    evaluate_target_health = true
+  }
+}
+

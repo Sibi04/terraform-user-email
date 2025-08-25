@@ -562,7 +562,9 @@ resource "aws_cloudfront_origin_access_control" "oac" {
   signing_protocol                  = "sigv4"
 }
 
-
+resource "aws_s3_bucket" "cf_logs" {
+  bucket = "cf-logs-user-mail-1"
+}
 # CloudFront Distribution
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
@@ -659,7 +661,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }
-
+  logging_config {
+    bucket = "${aws_s3_bucket.cf_logs.bucket_domain_name}"
+    prefix = "cloudfront-logs/"
+    include_cookies = false
+  }
   default_root_object = "index.html"
   #depends_on =[aws_s3_bucket.website-index-808581944931]
 }

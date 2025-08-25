@@ -565,6 +565,17 @@ resource "aws_cloudfront_origin_access_control" "oac" {
 resource "aws_s3_bucket" "cf_logs" {
   bucket = "cf-logs-user-mail-1"
 }
+
+resource "aws_s3_bucket_public_access_block" "example1" {
+  bucket = aws_s3_bucket.cf_logs.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+  
+}
+
 # CloudFront Distribution
 
 resource "aws_cloudfront_distribution" "s3_distribution" {

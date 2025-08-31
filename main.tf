@@ -735,7 +735,7 @@ resource "aws_sns_topic_subscription" "user_subscription" {
 resource "aws_cloudwatch_event_rule" "hourly_weekday_rule" {
   name                = "hourly-weekday-rule"
   description         = "Triggers every hour from 9 AM to 5 PM, Monday to Friday"
-  schedule_expression = "cron(0 3-11 ? * MON-FRI *)"
+  schedule_expression = "cron(30 3-11 ? * MON-FRI *)"
 }
 
 # EventBridge Target -> Lambda
